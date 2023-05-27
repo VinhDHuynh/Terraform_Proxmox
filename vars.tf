@@ -5,7 +5,7 @@ variable "ssh_key" {
 }
 #Establish which Proxmox host you'd like to spin a VM up on
 variable "proxmox_host" {
-    default = "https://chirrut.jedimasters.net"
+    default = "https://chirrut.jedimasters.net:8006/api2/json"
 }
 #Specify which template name you'd like to use
 variable "template_name" {

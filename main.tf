@@ -34,7 +34,7 @@ resource "proxmox_vm_qemu" "test" {
 
   # VM Settings. `agent = 1` enables qemu-guest-agent
   agent = 1
-  os_type = "cloud-init"
+  os_type = "centos7"
   cores = 4
   sockets = 1
   cpu = "host"
@@ -46,7 +46,7 @@ resource "proxmox_vm_qemu" "test" {
     slot = 0
     size = "50G"
     type = "scsi"
-    storage = "intel-storage" # Name of storage local to the host you are spinning the VM up on
+    storage = "local" # Name of storage local to the host you are spinning the VM up on
     # Enables SSD emulation
     ssd = 1
     # Enables thin-provisioning
