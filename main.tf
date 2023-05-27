@@ -2,8 +2,8 @@ terraform {
   required_providers {
     proxmox = {
       source = "telmate/proxmox"
-      #latest version as of Nov 30 2022
-      version = "2.9.11"
+      #latest version as of May 27 2023
+      version = "2.9.14"
     }
   }
 }
@@ -24,7 +24,7 @@ resource "proxmox_vm_qemu" "test" {
   name = "test_vm${count.index + 1}" # count.index starts at 0
   #name = "test-vm-01"
   count = 1 # Establishes how many instances will be created 
-  target_node = var.proxmox_host
+  target_node = var.proxmox_hostos
 
   # References our vars.tf file to plug in our template name
   clone = var.template_name
