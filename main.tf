@@ -24,7 +24,7 @@ resource "proxmox_vm_qemu" "test" {
   name = "test_vm${count.index + 1}" # count.index starts at 0
   #name = "test-vm-01"
   count = 1 # Establishes how many instances will be created 
-  target_node = var.proxmox_hostos
+  target_node = var.proxmox_host
 
   # References our vars.tf file to plug in our template name
   clone = var.template_name
