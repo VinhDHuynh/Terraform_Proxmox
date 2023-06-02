@@ -1,14 +1,16 @@
 terraform {
   required_providers {
     proxmox = {
+      
       source = "telmate/proxmox"
       #latest version as of May 27 2023
-      version = "2.9.14"
+      version = "2.9.11"
     }
   }
 }
 
 provider "proxmox" {
+  pm_debug = true
   # References our vars.tf file to plug in the api_url 
   pm_api_url = var.api_url
   # References our secrets.tfvars file to plug in our token_id
@@ -20,11 +22,12 @@ provider "proxmox" {
 }
 
 # Creates a proxmox_vm_qemu entity named test
-resource "proxmox_vm_qemu" "test" {
+resource "proxmox_vm_qemu" "docker" {
   name = "test_vm${count.index + 1}" # count.index starts at 0
   #name = "test-vm-01"
   count = 1 # Establishes how many instances will be created 
   target_node = var.proxmox_host
+  
 
   # References our vars.tf file to plug in our template name
   clone = var.template_name
@@ -34,21 +37,21 @@ resource "proxmox_vm_qemu" "test" {
 
   # VM Settings. `agent = 1` enables qemu-guest-agent
   agent = 1
-  os_type = "centos7"
-  cores = 4
-  sockets = 1
+  os_type = "cloud-init"
+  cores = 15
+  sockets = 2
   cpu = "host"
-  memory = 2048
+  memory = 64000
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
 
   disk {
     slot = 0
     size = "50G"
-    type = "scsi"
+    type = "scsi0"
     storage = "local" # Name of storage local to the host you are spinning the VM up on
     # Enables SSD emulation
-    ssd = 1
+    ssd = 0
     # Enables thin-provisioning
     discard = "on"
     #iothread = 1
